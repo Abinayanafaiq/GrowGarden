@@ -23,6 +23,29 @@ client.on("ready", () => {
 // Fungsi fetch & format data
 async function fetchData() {
   try {
+    const icons = {
+      // gear
+      "Harvest Tool": "🌾",
+      "Favorite Tool": "⭐",
+      "Cleaning Spray": "🧴",
+      "Recall Wrench": "🔧",
+      Trowel: "⛏️",
+      "Trading Ticket": "🎫",
+      "Watering Can": "💧",
+
+      // seeds
+      Pumpkin: "🎃",
+      Daffodil: "🌼",
+      Tomato: "🍅",
+      Blueberry: "🫐",
+      Strawberry: "🍓",
+      Carrot: "🥕",
+
+      // eggs
+      "Common Egg": "🥚",
+      "Uncommon Egg": "🍳",
+      "Legendary Egg": "🐉",
+    };
     const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
     if (!res.ok) throw new Error(`Unexpected response ${res.statusText}`);
     const data = await res.json();
@@ -32,20 +55,25 @@ async function fetchData() {
     if (data.gear) {
       message += "⚙️ Gear:\n";
       message +=
-        data.gear.map((i) => `- ${i.name} (${i.quantity})`).join("\n") + "\n\n";
+        data.gear
+          .map((i) => `- ${i.name} ${icons[i.name] || ""} (${i.quantity})`)
+          .join("\n") + "\n\n";
     }
 
     if (data.seeds) {
       message += "🌱 Seeds:\n";
       message +=
-        data.seeds.map((i) => `- ${i.name} (${i.quantity})`).join("\n") +
-        "\n\n";
+        data.seeds
+          .map((i) => `- ${i.name} ${icons[i.name] || ""} (${i.quantity})`)
+          .join("\n") + "\n\n";
     }
 
     if (data.eggs) {
       message += "🥚 Eggs:\n";
       message +=
-        data.eggs.map((i) => `- ${i.name} (${i.quantity})`).join("\n") + "\n\n";
+        data.eggs
+          .map((i) => `- ${i.name} ${icons[i.name] || ""} (${i.quantity})`)
+          .join("\n") + "\n\n";
     }
 
     return message.trim();
